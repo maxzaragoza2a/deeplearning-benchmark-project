@@ -1,0 +1,59 @@
+# Configuration de reference : PRWN (Prototypical Random Walk Network, Ayyad et al. 2021).
+# Les autres runs heritent de ce fichier via la cle `base` et ne reecrivent que ce qui change.
+run_name: prwn
+
+# Dataset hors du depot, deja ramene en 224x204 par scripts/resize_dataset.py.
+data_root: "../ds_FSL_224x204"
+splits: [train, valid, test]   # regroupes : le split utile est refait PAR CLASSES ci-dessous
+dedup: true                    # ecarte les doublons md5 exacts (garde la premiere occurrence)
+limit_per_class: null          # entier = nombre max d'images par classe (tests rapides)
+
+# DINOv2 pre-entraine et GELE : embeddings calcules une fois, caches dans results_dir/embeddings/.
+model: dinov2_s                # dinov2_s | dinov2_b | dinov2_l
+input_size: [224, 224]         # [largeur, hauteur], multiples de 14, letterbox (bandes noires)
+extract_batch_size: 64
+device: auto                   # auto | cpu | cuda
+seed: 0
+results_dir: "results"
+
+# Split par classes, stratifie par taille : les especes de validation et de test ne
+# sont jamais vues a l'entrainement.
+class_split:
+  n_val_classes: 20
+  n_test_classes: 39
+  n_bins: 5
+  seed: 0
+
+# Seule cette tete est entrainee, par-dessus les embeddings geles.
+# Lineaire par defaut : un MLP (hidden_dim: 512) sur-apprend sur les 70 classes
+# d'entrainement et fait moins bien que le backbone seul.
+head:
+  out_dim: 384
+  hidden_dim: null             # null = tete lineaire ; entier = MLP a une couche cachee
+  dropout: 0.1                 # MLP uniquement
+
+train:
+  n_way: 5
+  k_shot: 1
+  n_query: 5
+  n_unlabeled: 5               # points non etiquetes par classe de l'episode
+  n_distractor_classes: 0      # classes hors episode ajoutees aux non-etiquetes
+  labeled_ratio: 0.4           # part des images d'entrainement dont on garde l'etiquette
+  lambda_rw: 0.5               # poids de L_RW ; 0 = Prototypical Network classique
+  rw_steps: 3                  # tau maximal : marches de 0 a rw_steps pas intermediaires
+  rw_decay: 0.7                # alpha
+  rw_smoothing: 0.1            # lissage des transitions prototype <-> point (code de reference)
+  visit_weight: 1.0
+  distance_scale: 1.0          # logits = -distance_scale * distance euclidienne au carre
+  n_steps: 20000               # un pas = un episode
+  lr: 1.0e-3                   # decroissance en cosinus
+  weight_decay: 1.0e-4
+  eval_every: 500
+  n_val_episodes: 300
+
+eval:
+  n_way: 5
+  k_shots: [1, 5]
+  n_query: 10
+  n_unlabeled: 5               # pour l'inference semi-supervisee (soft k-means)
+  n_episodes: 600

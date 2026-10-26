@@ -121,7 +121,30 @@ This paper shows that episodic training is a **wasteful** way to learn with a pr
 
 A **semi-supervised** extension that leverages **unlabelled images**. On top of the prototypical loss, a *random-walk* loss encourages walks that start at a prototype, pass through unlabelled embeddings, and return to the same prototype — which pulls unlabelled points into compact class clusters. Particularly relevant here given the small number of labelled images for most species.
 
-- `src/models/prwn.py` <!-- TODO: adjust path -->
+- `src/models/prwn.py` — the loss (`prwn_loss`, `random_walk_loss`) and the semi-supervised inference step (`refine_prototypes`), as pure functions on embeddings.
+- `src/models/backbone.py` — the embedding: **pretrained DINOv2, frozen**, with a small trainable head on top (`ProjectionHead`, linear by default). Backbone embeddings are computed once and cached in `results/embeddings/`; only the head is trained by the PRW loss.
+- `src/data/episodes.py` — class-disjoint split (stratified by class size), labelled / unlabelled split, semi-supervised episode sampler (with optional distractor classes).
+- `scripts/train_prwn.py` — training, validation-based model selection and test evaluation.
+
+One config file per run, in `configs/`:
+
+| Config | Run |
+|---|---|
+| `prwn.yaml` | PRWN: frozen DINOv2 ViT-S/14 + linear head, 5-way 1-shot episodes, 40 % of training labels, τ = 3, α = 0.7, λ = 0.5 |
+| `prwn_pn.yaml` | control: same labels, λ = 0 (plain Prototypical Network) |
+| `prwn_pn_all.yaml` | oracle: Prototypical Network with 100 % of the labels |
+| `prwn_smoke.yaml` | 4-step CPU run that only checks the pipeline end to end |
+
+```bash
+pip install -r requirements.txt
+python -m pytest tests
+python scripts/train_prwn.py --config configs/prwn_smoke.yaml          # CPU, ~2 min
+python scripts/train_prwn.py --config configs/prwn.yaml                # GPU advised for the one-off embedding extraction
+# on Colab: point to the dataset and keep results on Drive
+python scripts/train_prwn.py --config configs/prwn.yaml     --data-root /content/ds_FSL_224x204 --results-dir /content/drive/MyDrive/results
+```
+
+Each run writes `results/<run_name>/metrics.json` (config, class split, test accuracy with 95 % CI, with and without soft k-means refinement, and the same metrics for the frozen backbone alone as a reference), `history.csv` and the best head `best_head.pt`. Class split, labelled subset and test episodes depend only on the seeds in the config, so the three runs are evaluated on identical episodes.
 
 ---
 

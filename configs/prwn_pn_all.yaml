@@ -1,0 +1,6 @@
+# Oracle : Prototypical Network avec 100 % des etiquettes d'entrainement.
+base: prwn.yaml
+run_name: prwn_pn_all
+train:
+  lambda_rw: 0.0
+  labeled_ratio: 1.0

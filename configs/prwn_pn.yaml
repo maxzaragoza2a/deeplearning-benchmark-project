@@ -1,0 +1,5 @@
+# Controle : Prototypical Network sur les memes 40 % d'etiquettes, sans marche aleatoire.
+base: prwn.yaml
+run_name: prwn_pn
+train:
+  lambda_rw: 0.0
