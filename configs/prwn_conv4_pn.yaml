@@ -1,0 +1,5 @@
+# Controle : Prototypical Network sur le meme Conv-4, sans marche aleatoire.
+base: prwn_conv4.yaml
+run_name: prwn_conv4_pn
+train:
+  lambda_rw: 0.0

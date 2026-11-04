@@ -36,6 +36,16 @@ class HeadConfig:
 
 
 @dataclass
+class Conv4Config:
+    """Backbone Conv-4 entraine de zero (scripts/train_prwn_conv4.py uniquement)."""
+
+    hidden_channels: int = 64
+    pool_size: Optional[int] = 5  # carte de sortie ramenee a 5x5 -> 1 600 dimensions
+    hflip: bool = True  # augmentation : symetrie horizontale aleatoire
+    max_shift: int = 16  # augmentation : decalage aleatoire, en pixels
+
+
+@dataclass
 class TrainConfig:
     """Episodes d'entrainement semi-supervises, loss PRW et optimisation de la tete."""
 
@@ -86,6 +96,7 @@ class Config:
     results_dir: Path
     class_split: ClassSplitConfig
     head: HeadConfig
+    conv4: Conv4Config
     train: TrainConfig
     eval: EvalConfig
     raw: dict  # contenu YAML fusionne, recopie tel quel dans les resultats
@@ -165,6 +176,7 @@ def load_config(path: str | Path, overrides: dict | None = None) -> Config:
         results_dir=_as_project_path(raw.get("results_dir", "results")),
         class_split=ClassSplitConfig(**raw.get("class_split", {})),
         head=HeadConfig(**raw.get("head", {})),
+        conv4=Conv4Config(**raw.get("conv4", {})),
         train=TrainConfig(**raw.get("train", {})),
         eval=EvalConfig(**raw.get("eval", {})),
         raw=raw,
