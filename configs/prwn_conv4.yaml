@@ -1,0 +1,19 @@
+# PRWN avec un Conv-4 entraine de zero (scripts/train_prwn_conv4.py).
+# Herite de prwn.yaml : meme dataset, meme split par classes, memes episodes,
+# meme evaluation. Seul l'embedding change : le Conv-4 apprend avec la loss PRW.
+base: prwn.yaml
+run_name: prwn_conv4
+model: conv4                   # informatif : le script n'utilise que la section conv4
+extract_batch_size: 256        # taille des lots pour calculer les embeddings en evaluation
+
+conv4:
+  hidden_channels: 64
+  pool_size: 5                 # 64 x 5 x 5 = 1 600 dimensions, comme dans Snell et al.
+  hflip: true                  # augmentation : symetrie horizontale aleatoire
+  max_shift: 16                # augmentation : decalage aleatoire (pixels), bord noir
+
+train:
+  n_steps: 20000
+  lr: 1.0e-3
+  weight_decay: 1.0e-4
+  eval_every: 1000
