@@ -1,0 +1,18 @@
+\documentclass[border=4pt]{standalone}
+\usepackage{amsmath,amssymb,xcolor}
+\definecolor{ink}{HTML}{24313D}
+\begin{document}
+\color{ink}
+$\displaystyle
+\begin{aligned}
+\mathcal{L} &= \mathcal{L}_{S} + \lambda\,\mathcal{L}_{RW}\\[14pt]
+\mathcal{L}_{S} &= -\frac{1}{|Q|}\sum_{(q,y)\in Q}\log p_\theta(y\mid q)\\[14pt]
+\mathcal{L}_{RW} &= \mathcal{L}_{\text{walker}} + \mathcal{L}_{\text{visit}}
+\end{aligned}
+\qquad\qquad
+\begin{aligned}
+\mathcal{L}_{\text{walker}} &= \sum_{\tau=0}^{3}\alpha^{\tau}\,H\!\left(I,\,T^{(\tau)}\right)\\[10pt]
+T^{(\tau)} &= P_{p\to x}\,\big(P_{x\to x}\big)^{\tau}\,P_{x\to p}\\[10pt]
+\mathcal{L}_{\text{visit}} &= H\!\left(U,\,P_{\text{visit}}\right)
+\end{aligned}$
+\end{document}
