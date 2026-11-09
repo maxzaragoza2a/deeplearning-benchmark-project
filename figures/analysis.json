@@ -1,0 +1,110 @@
+{
+  "prwn_conv4": {
+    "separability": {
+      "silhouette": 0.07635211859383642,
+      "ratio": 2.1080074738586494
+    },
+    "ece": {
+      "1shot": 0.009144495110054175,
+      "5shot": 0.07996005904575187
+    },
+    "per_class_accuracy_1shot": {
+      "Anopheles paludis": 0.8709,
+      "Anopheles pharoensis": 0.8396,
+      "Anopheles squamosus": 0.8813,
+      "Culex tritaeniorhynchus": 0.9913,
+      "Culicoïdes nubeculosus": 0.8856,
+      "Glossina calliginea": 0.891,
+      "Glossina fusca fusca": 0.7519,
+      "Glossina morsitans centralis": 0.8014,
+      "Glossina palpalis palpalis": 0.8718,
+      "Glossina tachinoïdes": 0.8164,
+      "Lutzomyia longipalpis": 0.9074,
+      "Lutzomyia migonei": 0.8129,
+      "Phlebotomus ariasi": 0.9093,
+      "Phlebotomus sergenti": 0.8919,
+      "Phlebotomus tobbi": 0.6886
+    }
+  },
+  "prwn_conv4_pn": {
+    "separability": {
+      "silhouette": 0.09046493278176167,
+      "ratio": 2.139547603234326
+    },
+    "ece": {
+      "1shot": 0.04060269930941348,
+      "5shot": 0.03748049678798352
+    },
+    "per_class_accuracy_1shot": {
+      "Anopheles paludis": 0.8383,
+      "Anopheles pharoensis": 0.8441,
+      "Anopheles squamosus": 0.8808,
+      "Culex tritaeniorhynchus": 0.9662,
+      "Culicoïdes nubeculosus": 0.9062,
+      "Glossina calliginea": 0.891,
+      "Glossina fusca fusca": 0.7455,
+      "Glossina morsitans centralis": 0.7885,
+      "Glossina palpalis palpalis": 0.896,
+      "Glossina tachinoïdes": 0.8342,
+      "Lutzomyia longipalpis": 0.9138,
+      "Lutzomyia migonei": 0.8826,
+      "Phlebotomus ariasi": 0.8477,
+      "Phlebotomus sergenti": 0.8559,
+      "Phlebotomus tobbi": 0.7052
+    }
+  },
+  "prwn": {
+    "separability": {
+      "silhouette": 0.03700732856824214,
+      "ratio": 3.1626371555091177
+    },
+    "ece": {
+      "1shot": 0.18986826184973918,
+      "5shot": 0.09633819809980333
+    },
+    "per_class_accuracy_1shot": {
+      "Anopheles paludis": 0.8245,
+      "Anopheles pharoensis": 0.8248,
+      "Anopheles squamosus": 0.8202,
+      "Culex tritaeniorhynchus": 0.9928,
+      "Culicoïdes nubeculosus": 0.9909,
+      "Glossina calliginea": 0.697,
+      "Glossina fusca fusca": 0.7942,
+      "Glossina morsitans centralis": 0.7544,
+      "Glossina palpalis palpalis": 0.7282,
+      "Glossina tachinoïdes": 0.788,
+      "Lutzomyia longipalpis": 0.8286,
+      "Lutzomyia migonei": 0.7468,
+      "Phlebotomus ariasi": 0.842,
+      "Phlebotomus sergenti": 0.771,
+      "Phlebotomus tobbi": 0.71
+    }
+  },
+  "dinov2": {
+    "separability": {
+      "silhouette": 0.031199071053027078,
+      "ratio": 1.871617960126939
+    },
+    "ece": {
+      "1shot": 0.19558124614600303,
+      "5shot": 0.0877226264012298
+    },
+    "per_class_accuracy_1shot": {
+      "Anopheles paludis": 0.7321,
+      "Anopheles pharoensis": 0.8376,
+      "Anopheles squamosus": 0.8556,
+      "Culex tritaeniorhynchus": 0.9643,
+      "Culicoïdes nubeculosus": 0.9675,
+      "Glossina calliginea": 0.6662,
+      "Glossina fusca fusca": 0.8095,
+      "Glossina morsitans centralis": 0.8041,
+      "Glossina palpalis palpalis": 0.7147,
+      "Glossina tachinoïdes": 0.832,
+      "Lutzomyia longipalpis": 0.8185,
+      "Lutzomyia migonei": 0.8119,
+      "Phlebotomus ariasi": 0.7756,
+      "Phlebotomus sergenti": 0.7301,
+      "Phlebotomus tobbi": 0.6919
+    }
+  }
+}
