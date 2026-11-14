@@ -94,20 +94,31 @@ def build_index(
     return index
 
 
-def _load_one(path: Path, size: tuple[int, int]) -> np.ndarray:
+def _load_one(path: Path, size: tuple[int, int], letterbox: bool = True) -> np.ndarray:
     with Image.open(path) as image:
+        if not letterbox:
+            # Shared protocol: images are used exactly as stored, any other size is an error.
+            if image.size != size:
+                raise ValueError(
+                    f"{path} is {image.size[0]}x{image.size[1]}, expected {size[0]}x{size[1]} "
+                    "(letterbox disabled: images must already have the input size)."
+                )
+            return np.asarray(image.convert("RGB"))
         image = ImageOps.exif_transpose(image).convert("RGB")
         # Letterbox : ratio preserve, bandes noires (le fond des images est deja noir).
         image = ImageOps.pad(image, size, method=Image.LANCZOS, color=(0, 0, 0))
         return np.asarray(image)
 
 
-def load_images(index: DatasetIndex, input_size: tuple[int, int]) -> torch.Tensor:
+def load_images(index: DatasetIndex, input_size: tuple[int, int], letterbox: bool = True) -> torch.Tensor:
     """Charge tout le dataset en un tenseur uint8 (n_images, 3, hauteur, largeur).
 
     ~150 Ko par image en 224x224 : les 5 456 images tiennent dans moins d'1 Go, ce
     qui evite de relire le disque a chaque episode.
+
+    `letterbox=False` (shared protocol): no resizing at all, every image must already
+    be `input_size` (width, height), otherwise a ValueError is raised.
     """
     with ThreadPoolExecutor() as pool:
-        arrays = list(pool.map(lambda path: _load_one(path, input_size), index.paths))
+        arrays = list(pool.map(lambda path: _load_one(path, input_size, letterbox), index.paths))
     return torch.from_numpy(np.stack(arrays)).permute(0, 3, 1, 2).contiguous()

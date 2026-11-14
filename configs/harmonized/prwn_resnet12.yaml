@@ -1,0 +1,43 @@
+# PRWN with a ResNet-12 trained from scratch, under the protocol shared by the group
+# (common/README.md). Main run. Run with scripts/train_harmonized.py.
+#
+# Same ResNet-12 as the NCA run (src/models/resnet12.py = scripts/nca_paper/model.py).
+# Differences with configs/prwn_conv4.yaml (presentation runs, kept untouched):
+# - original train / valid / test folders instead of a class-level re-split;
+# - images read as is at 224x204 (no letterbox), duplicates kept;
+# - ImageNet normalization, no augmentation (fixed in the script, not configurable);
+# - every training label used; the random walk goes through the query embeddings;
+# - test on the 1000 shared episodes of common/test_episodes.json.
+run_name: harmonized_prwn_resnet12
+model: resnet12                  # resnet12 | conv4
+
+data_root: "../ds_FSL_224x204"   # relative to the repo root
+dedup: false                     # duplicates kept (5 out of 5,456 images)
+limit_per_class: null            # integer = max images per class (quick tests only)
+input_size: [224, 204]           # [width, height]: the stored size, checked at load time
+extract_batch_size: 64           # ResNet-12 keeps full resolution in its first stage: small batches
+device: auto                     # auto | cpu | cuda
+seed: 0
+results_dir: "results"
+
+conv4:                           # only read when model: conv4
+  hidden_channels: 64
+  pool_size: 5                   # 64 x 5 x 5 = 1,600 dimensions, as in Snell et al.
+
+train:
+  n_way: 5
+  k_shot: 1
+  n_query: 1                     # 118 train classes have >= 2 images (1 support + 1 query)
+  n_unlabeled: 0                 # no extra images: the random walk goes through the queries
+  labeled_ratio: 1.0             # every label, like NCA and ProtoNet
+  lambda_rw: 0.5                 # weight of L_RW; 0 = Prototypical Network
+  rw_steps: 3                    # max tau: walks of 0 to rw_steps intermediate steps
+  rw_decay: 0.7                  # alpha
+  rw_smoothing: 0.1              # prototype <-> point transition smoothing (reference code)
+  visit_weight: 1.0
+  distance_scale: 1.0            # logits = -distance_scale * squared Euclidean distance
+  n_steps: 20000                 # one step = one episode
+  lr: 1.0e-3                     # AdamW, cosine decay
+  weight_decay: 1.0e-4
+  eval_every: 500
+  n_val_episodes: 500            # 5-way 1-shot 1-query episodes on the valid folder, fixed seed

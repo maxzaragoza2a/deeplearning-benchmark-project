@@ -1,0 +1,11 @@
+# Quick CPU check that the harmonized pipeline runs (not that the model learns).
+# ResNet-12 by default; add `--model conv4` to check the Conv-4 path. Use `--skip-test`
+# with the ResNet-12: the full shared test takes long on CPU at 224x204.
+base: prwn_resnet12.yaml
+run_name: harmonized_smoke
+limit_per_class: 2
+extract_batch_size: 16
+train:
+  n_steps: 4
+  eval_every: 2
+  n_val_episodes: 20

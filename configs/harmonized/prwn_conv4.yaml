@@ -1,0 +1,5 @@
+# Secondary run: same as prwn_resnet12.yaml, with a Conv-4 backbone trained from scratch.
+base: prwn_resnet12.yaml
+run_name: harmonized_prwn_conv4
+model: conv4
+extract_batch_size: 256          # the Conv-4 is light: larger batches are fine

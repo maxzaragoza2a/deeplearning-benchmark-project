@@ -1,0 +1,6 @@
+# Control: Prototypical Network with the same Conv-4, the same data and exactly the
+# same training episodes as prwn_conv4.yaml, without the random walk.
+base: prwn_conv4.yaml
+run_name: harmonized_prwn_conv4_pn
+train:
+  lambda_rw: 0.0
