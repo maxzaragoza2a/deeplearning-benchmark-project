@@ -1,0 +1,56 @@
+{
+  "config": {
+    "run_name": "sweep_optimizer/sgd_lr0.1",
+    "model": "resnet12",
+    "data_root": "../ds_FSL_224x204",
+    "dedup": false,
+    "limit_per_class": null,
+    "input_size": [
+      224,
+      204
+    ],
+    "extract_batch_size": 64,
+    "device": "cuda",
+    "seed": 0,
+    "results_dir": "/users/maxizara79/deeplearning-benchmark-project-main/results",
+    "conv4": {
+      "hidden_channels": 64,
+      "pool_size": 5
+    },
+    "train": {
+      "n_way": 5,
+      "k_shot": 1,
+      "n_query": 1,
+      "n_unlabeled": 0,
+      "labeled_ratio": 1.0,
+      "lambda_rw": 0.5,
+      "rw_steps": 3,
+      "rw_decay": 0.7,
+      "rw_smoothing": 0.1,
+      "visit_weight": 1.0,
+      "distance_scale": 1.0,
+      "n_steps": 4000,
+      "lr": 0.1,
+      "weight_decay": 0.0005,
+      "eval_every": 500,
+      "n_val_episodes": 500,
+      "optimizer": "sgd",
+      "momentum": 0.9,
+      "nesterov": true,
+      "lr_schedule": "cosine"
+    }
+  },
+  "device": "cuda",
+  "method": "PRWN",
+  "backbone": "resnet12",
+  "n_parameters": 9427840,
+  "embedding_dim": 640,
+  "n_train_images": 1818,
+  "n_train_classes_usable": 118,
+  "n_valid_classes_usable": 98,
+  "best_val": {
+    "accuracy": 79.36000104844571,
+    "ci95": 1.5646340892963524,
+    "step": 4000
+  }
+}

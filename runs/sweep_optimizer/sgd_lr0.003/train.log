@@ -1,0 +1,14 @@
+Train: 1818 images, 118 classes usable in 5-way 1-shot 1-query episodes | Valid: 1819 images, 98 classes usable
+Images loaded in 4 s: train (1818, 3, 204, 224), val (1819, 3, 204, 224)
+resnet12: 9.43 M parameters, embedding dimension 640, on cuda
+Optimizer: sgd (lr 0.003, weight decay 0.0005, momentum 0.9, nesterov True), cosine schedule over 4000 steps
+step    500/4000 | loss 3.366 | train acc 74.0 % | val acc 73.40 +/- 1.76 % | 71 s
+step   1000/4000 | loss 2.978 | train acc 83.0 % | val acc 79.96 +/- 1.55 % | 137 s
+step   1500/4000 | loss 2.841 | train acc 87.5 % | val acc 79.48 +/- 1.61 % | 204 s
+step   2000/4000 | loss 2.742 | train acc 90.2 % | val acc 82.08 +/- 1.47 % | 251 s
+step   2500/4000 | loss 2.742 | train acc 91.0 % | val acc 82.40 +/- 1.56 % | 310 s
+step   3000/4000 | loss 2.694 | train acc 94.3 % | val acc 83.84 +/- 1.52 % | 370 s
+step   3500/4000 | loss 2.653 | train acc 93.2 % | val acc 84.16 +/- 1.49 % | 432 s
+step   4000/4000 | loss 2.596 | train acc 94.4 % | val acc 84.20 +/- 1.52 % | 497 s
+Test skipped (--skip-test).
+Results written to /users/maxizara79/deeplearning-benchmark-project-main/results/sweep_optimizer/sgd_lr0.003

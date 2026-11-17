@@ -1,0 +1,72 @@
+{
+  "config": {
+    "run_name": "harmonized_prwn_resnet12",
+    "model": "resnet12",
+    "data_root": "../ds_FSL_224x204",
+    "dedup": false,
+    "limit_per_class": null,
+    "input_size": [
+      224,
+      204
+    ],
+    "extract_batch_size": 64,
+    "device": "cuda",
+    "seed": 0,
+    "results_dir": "results",
+    "conv4": {
+      "hidden_channels": 64,
+      "pool_size": 5
+    },
+    "train": {
+      "n_way": 5,
+      "k_shot": 1,
+      "n_query": 1,
+      "n_unlabeled": 0,
+      "labeled_ratio": 1.0,
+      "lambda_rw": 0.5,
+      "rw_steps": 3,
+      "rw_decay": 0.7,
+      "rw_smoothing": 0.1,
+      "visit_weight": 1.0,
+      "distance_scale": 1.0,
+      "n_steps": 20000,
+      "lr": 0.001,
+      "weight_decay": 0.0001,
+      "eval_every": 500,
+      "n_val_episodes": 500
+    }
+  },
+  "device": "cuda",
+  "method": "PRWN",
+  "backbone": "resnet12",
+  "n_parameters": 9427840,
+  "embedding_dim": 640,
+  "n_train_images": 1818,
+  "n_train_classes_usable": 118,
+  "n_valid_classes_usable": 98,
+  "best_val": {
+    "accuracy": 86.00000073313713,
+    "ci95": 1.4406740224505652,
+    "step": 8500
+  },
+  "test": {
+    "n_episodes": 1000,
+    "n_way": 5,
+    "1shot": {
+      "accuracy": 81.22000885009766,
+      "ci95": 1.054766297340393
+    },
+    "1shot_cl2n": {
+      "accuracy": 79.5,
+      "ci95": 1.1039990186691284
+    },
+    "5shot": {
+      "accuracy": 89.58000183105469,
+      "ci95": 0.8659981489181519
+    },
+    "5shot_cl2n": {
+      "accuracy": 88.56000518798828,
+      "ci95": 0.901894211769104
+    }
+  }
+}

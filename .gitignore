@@ -6,3 +6,6 @@ results/
 
 # Logs
 *.log
+
+# Light run outputs are versioned, logs included
+!runs/**/*.log

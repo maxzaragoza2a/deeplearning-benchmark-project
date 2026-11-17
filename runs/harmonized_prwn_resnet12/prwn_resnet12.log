@@ -1,0 +1,50 @@
+nohup: ignoring input
+Train: 1818 images, 118 classes usable in 5-way 1-shot 1-query episodes | Valid: 1819 images, 98 classes usable
+Images loaded in 5 s: train (1818, 3, 204, 224), val (1819, 3, 204, 224)
+resnet12: 9.43 M parameters, embedding dimension 640, on cuda
+step    500/20000 | loss 3.401 | train acc 74.0 % | val acc 68.64 +/- 1.83 % | 38 s
+step   1000/20000 | loss 3.060 | train acc 81.8 % | val acc 78.84 +/- 1.55 % | 72 s
+step   1500/20000 | loss 2.916 | train acc 85.1 % | val acc 76.60 +/- 1.71 % | 106 s
+step   2000/20000 | loss 2.836 | train acc 87.2 % | val acc 80.84 +/- 1.58 % | 140 s
+step   2500/20000 | loss 2.883 | train acc 86.2 % | val acc 79.84 +/- 1.59 % | 175 s
+step   3000/20000 | loss 2.857 | train acc 87.3 % | val acc 83.04 +/- 1.53 % | 209 s
+step   3500/20000 | loss 2.817 | train acc 89.6 % | val acc 83.80 +/- 1.56 % | 243 s
+step   4000/20000 | loss 2.725 | train acc 90.3 % | val acc 79.92 +/- 1.64 % | 277 s
+step   4500/20000 | loss 2.712 | train acc 91.5 % | val acc 83.44 +/- 1.53 % | 311 s
+step   5000/20000 | loss 2.713 | train acc 91.2 % | val acc 83.28 +/- 1.53 % | 345 s
+step   5500/20000 | loss 2.696 | train acc 92.2 % | val acc 81.92 +/- 1.55 % | 379 s
+step   6000/20000 | loss 2.667 | train acc 92.6 % | val acc 83.16 +/- 1.55 % | 413 s
+step   6500/20000 | loss 2.658 | train acc 93.9 % | val acc 80.80 +/- 1.64 % | 447 s
+step   7000/20000 | loss 2.645 | train acc 93.6 % | val acc 84.40 +/- 1.44 % | 481 s
+step   7500/20000 | loss 2.600 | train acc 94.3 % | val acc 83.08 +/- 1.48 % | 515 s
+step   8000/20000 | loss 2.606 | train acc 94.1 % | val acc 84.36 +/- 1.47 % | 549 s
+step   8500/20000 | loss 2.568 | train acc 94.9 % | val acc 86.00 +/- 1.44 % | 584 s
+step   9000/20000 | loss 2.554 | train acc 95.6 % | val acc 83.92 +/- 1.48 % | 618 s
+step   9500/20000 | loss 2.543 | train acc 95.0 % | val acc 85.56 +/- 1.42 % | 652 s
+step  10000/20000 | loss 2.527 | train acc 96.2 % | val acc 84.44 +/- 1.54 % | 687 s
+step  10500/20000 | loss 2.514 | train acc 96.2 % | val acc 82.80 +/- 1.51 % | 721 s
+step  11000/20000 | loss 2.501 | train acc 96.5 % | val acc 85.52 +/- 1.51 % | 755 s
+step  11500/20000 | loss 2.484 | train acc 96.4 % | val acc 83.76 +/- 1.44 % | 789 s
+step  12000/20000 | loss 2.486 | train acc 97.0 % | val acc 85.36 +/- 1.44 % | 823 s
+step  12500/20000 | loss 2.458 | train acc 97.4 % | val acc 84.96 +/- 1.43 % | 856 s
+step  13000/20000 | loss 2.440 | train acc 97.4 % | val acc 84.56 +/- 1.51 % | 890 s
+step  13500/20000 | loss 2.459 | train acc 97.3 % | val acc 83.68 +/- 1.53 % | 924 s
+step  14000/20000 | loss 2.420 | train acc 98.0 % | val acc 83.16 +/- 1.49 % | 958 s
+step  14500/20000 | loss 2.417 | train acc 97.8 % | val acc 84.00 +/- 1.45 % | 992 s
+step  15000/20000 | loss 2.410 | train acc 98.0 % | val acc 85.60 +/- 1.36 % | 1026 s
+step  15500/20000 | loss 2.413 | train acc 97.9 % | val acc 84.84 +/- 1.47 % | 1059 s
+step  16000/20000 | loss 2.405 | train acc 98.0 % | val acc 82.80 +/- 1.49 % | 1093 s
+step  16500/20000 | loss 2.383 | train acc 98.3 % | val acc 82.16 +/- 1.53 % | 1127 s
+step  17000/20000 | loss 2.388 | train acc 97.7 % | val acc 82.60 +/- 1.51 % | 1161 s
+step  17500/20000 | loss 2.380 | train acc 97.9 % | val acc 83.64 +/- 1.46 % | 1195 s
+step  18000/20000 | loss 2.391 | train acc 97.5 % | val acc 83.72 +/- 1.44 % | 1229 s
+step  18500/20000 | loss 2.375 | train acc 98.3 % | val acc 84.40 +/- 1.45 % | 1264 s
+step  19000/20000 | loss 2.389 | train acc 97.9 % | val acc 83.56 +/- 1.48 % | 1298 s
+step  19500/20000 | loss 2.379 | train acc 98.6 % | val acc 84.28 +/- 1.46 % | 1332 s
+step  20000/20000 | loss 2.381 | train acc 98.0 % | val acc 84.36 +/- 1.46 % | 1366 s
+harmonized_prwn_resnet12 (best valid step 8500) - 5-way, 1000 shared test episodes
+  1shot         81.22 +/- 1.05 %
+  1shot_cl2n    79.50 +/- 1.10 %
+  5shot         89.58 +/- 0.87 %
+  5shot_cl2n    88.56 +/- 0.90 %
+Results written to /users/maxizara79/deeplearning-benchmark-project-main/results/harmonized_prwn_resnet12

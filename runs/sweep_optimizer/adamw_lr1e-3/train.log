@@ -1,0 +1,14 @@
+Train: 1818 images, 118 classes usable in 5-way 1-shot 1-query episodes | Valid: 1819 images, 98 classes usable
+Images loaded in 5 s: train (1818, 3, 204, 224), val (1819, 3, 204, 224)
+resnet12: 9.43 M parameters, embedding dimension 640, on cuda
+Optimizer: adamw (lr 0.001, weight decay 0.0001), cosine schedule over 4000 steps
+step    500/4000 | loss 3.386 | train acc 74.6 % | val acc 77.08 +/- 1.71 % | 38 s
+step   1000/4000 | loss 3.038 | train acc 80.2 % | val acc 80.44 +/- 1.56 % | 72 s
+step   1500/4000 | loss 2.861 | train acc 86.9 % | val acc 79.68 +/- 1.57 % | 106 s
+step   2000/4000 | loss 2.786 | train acc 89.3 % | val acc 81.32 +/- 1.53 % | 140 s
+step   2500/4000 | loss 2.769 | train acc 89.6 % | val acc 83.44 +/- 1.53 % | 174 s
+step   3000/4000 | loss 2.707 | train acc 91.8 % | val acc 85.08 +/- 1.48 % | 208 s
+step   3500/4000 | loss 2.634 | train acc 93.3 % | val acc 84.36 +/- 1.50 % | 241 s
+step   4000/4000 | loss 2.569 | train acc 94.7 % | val acc 85.04 +/- 1.43 % | 275 s
+Test skipped (--skip-test).
+Results written to /users/maxizara79/deeplearning-benchmark-project-main/results/sweep_optimizer/adamw_lr1e-3

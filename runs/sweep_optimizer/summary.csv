@@ -1,0 +1,9 @@
+candidate,optimizer,lr,lr_schedule,weight_decay,status,best_val,best_val_ci95,best_step,last_val,last_train_acc,last_loss,minutes
+adamw_lr1e-3 (earlier),adamw,0.001,cosine,0.0001,ok,85.08,1.48,3000,85.04,94.7,2.569,
+sgd_lr0.003 (earlier),sgd,0.003,cosine,0.0005,ok,84.2,1.52,4000,84.2,94.4,2.596,
+sgd_lr0.0003,sgd,0.0003,cosine,0.0005,ok,84.16,1.54,3500,84.08,95.5,2.652,4.8
+sgd_lr0.001,sgd,0.001,cosine,0.0005,ok,83.96,1.47,3000,83.68,95.6,2.607,4.8
+sgd_lr0.01 (earlier),sgd,0.01,cosine,0.0005,ok,83.28,1.49,4000,83.28,91.0,2.697,
+sgd_lr0.1 (earlier),sgd,0.1,cosine,0.0005,ok,79.36,1.56,4000,79.36,86.5,2.82,
+sgd_lr0.1_step (earlier),sgd,0.1,step,0.0005,ok,77.92,1.58,4000,77.92,81.6,2.964,
+sgd_lr0.03 (earlier),sgd,0.03,cosine,0.0005,ok,75.92,1.69,4000,75.92,83.2,2.928,

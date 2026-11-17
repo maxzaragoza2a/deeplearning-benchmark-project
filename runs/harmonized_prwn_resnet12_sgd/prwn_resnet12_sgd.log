@@ -1,0 +1,51 @@
+nohup: ignoring input
+Train: 1818 images, 118 classes usable in 5-way 1-shot 1-query episodes | Valid: 1819 images, 98 classes usable
+Images loaded in 4 s: train (1818, 3, 204, 224), val (1819, 3, 204, 224)
+resnet12: 9.43 M parameters, embedding dimension 640, on cuda
+Optimizer: sgd (lr 0.003, weight decay 0.0005, momentum 0.9, nesterov True), cosine schedule over 20000 steps
+step    500/20000 | loss 3.370 | train acc 72.8 % | val acc 73.80 +/- 1.70 % | 79 s
+step   1000/20000 | loss 3.014 | train acc 81.6 % | val acc 77.44 +/- 1.60 % | 152 s
+step   1500/20000 | loss 2.875 | train acc 86.2 % | val acc 78.68 +/- 1.59 % | 226 s
+step   2000/20000 | loss 2.811 | train acc 88.3 % | val acc 81.20 +/- 1.54 % | 300 s
+step   2500/20000 | loss 2.824 | train acc 89.0 % | val acc 82.56 +/- 1.49 % | 373 s
+step   3000/20000 | loss 2.775 | train acc 91.5 % | val acc 83.72 +/- 1.46 % | 446 s
+step   3500/20000 | loss 2.749 | train acc 91.2 % | val acc 85.36 +/- 1.45 % | 519 s
+step   4000/20000 | loss 2.669 | train acc 93.2 % | val acc 82.60 +/- 1.49 % | 593 s
+step   4500/20000 | loss 2.674 | train acc 93.9 % | val acc 84.88 +/- 1.40 % | 666 s
+step   5000/20000 | loss 2.652 | train acc 93.5 % | val acc 83.20 +/- 1.51 % | 739 s
+step   5500/20000 | loss 2.656 | train acc 94.3 % | val acc 84.20 +/- 1.47 % | 813 s
+step   6000/20000 | loss 2.621 | train acc 94.4 % | val acc 85.16 +/- 1.44 % | 886 s
+step   6500/20000 | loss 2.597 | train acc 95.0 % | val acc 84.92 +/- 1.37 % | 959 s
+step   7000/20000 | loss 2.580 | train acc 95.6 % | val acc 84.12 +/- 1.39 % | 1033 s
+step   7500/20000 | loss 2.552 | train acc 95.5 % | val acc 83.12 +/- 1.46 % | 1106 s
+step   8000/20000 | loss 2.545 | train acc 95.6 % | val acc 85.56 +/- 1.42 % | 1180 s
+step   8500/20000 | loss 2.528 | train acc 96.1 % | val acc 86.12 +/- 1.43 % | 1253 s
+step   9000/20000 | loss 2.524 | train acc 96.7 % | val acc 86.56 +/- 1.37 % | 1326 s
+step   9500/20000 | loss 2.506 | train acc 96.1 % | val acc 84.80 +/- 1.47 % | 1399 s
+step  10000/20000 | loss 2.506 | train acc 96.7 % | val acc 84.72 +/- 1.41 % | 1473 s
+step  10500/20000 | loss 2.479 | train acc 96.6 % | val acc 85.56 +/- 1.39 % | 1550 s
+step  11000/20000 | loss 2.477 | train acc 96.8 % | val acc 85.96 +/- 1.36 % | 1665 s
+step  11500/20000 | loss 2.477 | train acc 96.8 % | val acc 87.08 +/- 1.34 % | 1781 s
+step  12000/20000 | loss 2.472 | train acc 97.5 % | val acc 87.20 +/- 1.33 % | 1888 s
+step  12500/20000 | loss 2.464 | train acc 97.8 % | val acc 86.60 +/- 1.35 % | 2005 s
+step  13000/20000 | loss 2.432 | train acc 97.8 % | val acc 85.40 +/- 1.43 % | 2120 s
+step  13500/20000 | loss 2.456 | train acc 97.6 % | val acc 84.96 +/- 1.45 % | 2237 s
+step  14000/20000 | loss 2.419 | train acc 97.7 % | val acc 85.24 +/- 1.38 % | 2352 s
+step  14500/20000 | loss 2.419 | train acc 98.2 % | val acc 85.20 +/- 1.46 % | 2468 s
+step  15000/20000 | loss 2.423 | train acc 98.3 % | val acc 86.16 +/- 1.43 % | 2584 s
+step  15500/20000 | loss 2.414 | train acc 98.0 % | val acc 85.28 +/- 1.43 % | 2660 s
+step  16000/20000 | loss 2.407 | train acc 97.9 % | val acc 86.80 +/- 1.40 % | 2734 s
+step  16500/20000 | loss 2.399 | train acc 98.4 % | val acc 85.48 +/- 1.41 % | 2807 s
+step  17000/20000 | loss 2.401 | train acc 97.8 % | val acc 84.96 +/- 1.45 % | 2881 s
+step  17500/20000 | loss 2.386 | train acc 98.2 % | val acc 86.28 +/- 1.40 % | 2954 s
+step  18000/20000 | loss 2.406 | train acc 97.9 % | val acc 86.36 +/- 1.37 % | 3025 s
+step  18500/20000 | loss 2.386 | train acc 98.3 % | val acc 86.80 +/- 1.34 % | 3098 s
+step  19000/20000 | loss 2.396 | train acc 98.3 % | val acc 86.40 +/- 1.36 % | 3171 s
+step  19500/20000 | loss 2.387 | train acc 98.6 % | val acc 86.84 +/- 1.35 % | 3244 s
+step  20000/20000 | loss 2.388 | train acc 98.4 % | val acc 86.44 +/- 1.35 % | 3312 s
+harmonized_prwn_resnet12_sgd (best valid step 12000) - 5-way, 1000 shared test episodes
+  1shot         84.32 +/- 0.99 %
+  1shot_cl2n    84.16 +/- 1.01 %
+  5shot         92.82 +/- 0.73 %
+  5shot_cl2n    92.82 +/- 0.72 %
+Results written to /users/maxizara79/deeplearning-benchmark-project-main/results/harmonized_prwn_resnet12_sgd
