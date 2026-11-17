@@ -1,0 +1,47 @@
+species,genus,queries,accuracy_1shot,accuracy_5shot
+Culex insignis,Culex,102,99.0,99.0
+Anopheles darlingi,Anopheles,114,98.2,100.0
+Anopheles gambiae,Anopheles,99,98.0,98.0
+Anopheles cinereus,Anopheles,116,97.4,99.1
+Anopheles paludis,Anopheles,101,97.0,99.0
+Anopheles mascarensis,Anopheles,95,96.8,98.9
+Glossina longipalpis,Glossina,113,96.5,98.2
+Aedes detritus,Aedes,104,96.2,100.0
+Anopheles coluzzii,Anopheles,109,94.5,97.2
+Anopheles funestus,Anopheles,123,94.3,97.6
+Glossina fusca fusca,Glossina,120,93.3,95.8
+Aedes polynesiensis,Aedes,120,93.3,98.3
+Anopheles pharoensis,Anopheles,118,93.2,100.0
+Phlebotomus ariasi,Phlebotomus,130,89.2,99.2
+Anopheles squamosus,Anopheles,106,88.7,90.6
+Culex tritaeniorhynchus,Culex,106,88.7,97.2
+Glossina fuscipes fuscipes,Glossina,111,88.3,93.7
+Glossina morsitans morsitans,Glossina,99,87.9,92.9
+Glossina palpalis gambiense,Glossina,123,87.8,93.5
+Glossina calliginea,Glossina,117,87.2,95.7
+Lutzomyia longipalpis,Lutzomyia,126,85.7,94.4
+Glossina palpalis palpalis,Glossina,101,85.1,89.1
+Aedes albopictus,Aedes,112,84.8,87.5
+Phlebotomus arabicus,Phlebotomus,116,84.5,89.7
+Lutzomyia migonei,Lutzomyia,101,84.2,93.1
+Phlebotomus orientalis,Phlebotomus,115,83.5,89.6
+Aedes aegypti,Aedes,106,83.0,92.5
+Phlebotomus sergenti,Phlebotomus,94,83.0,93.6
+Glossina fuscipes quazensis,Glossina,104,81.7,96.2
+Orthopodomyia reunionensis,Orthopodomyia,113,80.5,92.9
+Anopheles arabiensis,Anopheles,96,78.1,93.8
+Culex neavei,Culex,86,77.9,89.5
+Anopheles obscurus,Anopheles,108,77.8,90.7
+Glossina tachinoïdes,Glossina,89,77.5,86.5
+Culex  quinquefaciatus,Culex,110,77.3,88.2
+Glossina pallidipes,Glossina,116,76.7,87.1
+Phlebotomus argentipes,Phlebotomus,93,75.3,86.0
+Glossina morsitans submorsitans,Glossina,124,74.2,85.5
+Culicoïdes nubeculosus,Culicoïdes,111,73.9,84.7
+Culex univittatus,Culex,114,73.7,90.4
+Phlebotomus tobbi,Phlebotomus,99,71.7,82.8
+Sergentomyia schwetzi,Sergentomyia,113,71.7,88.5
+Glossina morsitans centralis,Glossina,115,69.6,93.0
+Phlebotomus papatasi,Phlebotomus,88,69.3,86.4
+Phlebotomus duboscqi,Phlebotomus,117,67.5,88.0
+Phlebotomus perniciosus,Phlebotomus,107,58.9,81.3
