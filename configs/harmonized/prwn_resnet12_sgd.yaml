@@ -1,0 +1,16 @@
+# PRWN + ResNet-12 trained with SGD instead of AdamW. Everything else (data, episodes,
+# 20,000 steps, validation, shared test) is identical to prwn_resnet12.yaml, so the two
+# runs compare the optimizers only.
+#
+# momentum, nesterov and weight_decay are those of the NCA run (scripts/nca_paper/train.py).
+# NCA uses lr 0.1 for batches of 128 images; our episodes have 10 images, so the lr is
+# chosen on `valid` with scripts/sweep_optimizer.py before the full run.
+base: prwn_resnet12.yaml
+run_name: harmonized_prwn_resnet12_sgd
+train:
+  optimizer: sgd
+  lr: 0.01                       # TO CONFIRM with the sweep (best valid accuracy)
+  momentum: 0.9
+  nesterov: true
+  weight_decay: 5.0e-4
+  lr_schedule: cosine            # cosine | step (step = x0.1 at 70% of the steps, as in NCA)

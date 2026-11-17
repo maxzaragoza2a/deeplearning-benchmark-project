@@ -35,6 +35,7 @@ from pathlib import Path
 
 import numpy as np
 import torch
+import yaml
 from torch import nn
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -58,6 +59,42 @@ def build_backbone(config) -> nn.Module:
     if config.model == "conv4":
         return Conv4(hidden_channels=config.conv4.hidden_channels, pool_size=config.conv4.pool_size)
     raise ValueError(f"Unknown model for the harmonized runs: {config.model} (expected one of {BACKBONES})")
+
+
+def build_optimizer(parameters, cfg) -> torch.optim.Optimizer:
+    """AdamW (default) or SGD with momentum, from the `train` section of the config."""
+    if cfg.optimizer == "adamw":
+        return torch.optim.AdamW(parameters, lr=cfg.lr, weight_decay=cfg.weight_decay)
+    if cfg.optimizer == "sgd":
+        return torch.optim.SGD(
+            parameters, lr=cfg.lr, momentum=cfg.momentum, nesterov=cfg.nesterov, weight_decay=cfg.weight_decay
+        )
+    raise ValueError(f"Unknown optimizer: {cfg.optimizer} (expected adamw or sgd)")
+
+
+def build_scheduler(optimizer: torch.optim.Optimizer, cfg):
+    """Cosine decay to 0 over n_steps, or a single drop by lr_gamma at lr_milestone * n_steps."""
+    if cfg.lr_schedule == "cosine":
+        return torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, cfg.n_steps)
+    if cfg.lr_schedule == "step":
+        milestone = max(1, int(cfg.lr_milestone * cfg.n_steps))
+        return torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=[milestone], gamma=cfg.lr_gamma)
+    raise ValueError(f"Unknown lr_schedule: {cfg.lr_schedule} (expected cosine or step)")
+
+
+def parse_sets(pairs: list[str]) -> dict:
+    """`["train.lr=0.01", "run_name=x"]` -> `{"train": {"lr": 0.01}, "run_name": "x"}` (YAML values)."""
+    overrides: dict = {}
+    for pair in pairs:
+        key, sep, value = pair.partition("=")
+        if not sep or not key:
+            raise ValueError(f"--set expects key=value, got {pair!r}")
+        *parents, leaf = key.split(".")
+        node = overrides
+        for parent in parents:
+            node = node.setdefault(parent, {})
+        node[leaf] = yaml.safe_load(value)
+    return overrides
 
 
 def class_pools(labels: np.ndarray) -> dict[int, np.ndarray]:
@@ -89,10 +126,12 @@ def main():
     p.add_argument("--data-root", type=Path, help="overrides data_root")
     p.add_argument("--device", choices=("auto", "cpu", "cuda"), help="overrides device")
     p.add_argument("--results-dir", type=Path, help="overrides results_dir")
-    p.add_argument("--skip-test", action="store_true", help="stop after training (quick checks only)")
+    p.add_argument("--skip-test", action="store_true", help="stop after training (quick checks, lr sweeps)")
+    p.add_argument("--set", action="append", default=[], metavar="KEY=VALUE",
+                   help="overrides any config value, e.g. --set train.lr=0.01 --set run_name=x (repeatable)")
     args = p.parse_args()
 
-    overrides = {}
+    overrides = parse_sets(args.set)
     if args.model:
         overrides["model"] = args.model
     if args.data_root:
@@ -142,8 +181,11 @@ def main():
     with torch.no_grad():
         dim = model.eval()(preprocess.eval()(train_images[:1])).shape[1]
     print(f"{config.model}: {n_params / 1e6:.2f} M parameters, embedding dimension {dim}, on {device}")
-    optimizer = torch.optim.AdamW(model.parameters(), lr=cfg.lr, weight_decay=cfg.weight_decay)
-    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, cfg.n_steps)
+    optimizer = build_optimizer(model.parameters(), cfg)
+    scheduler = build_scheduler(optimizer, cfg)
+    print(f"Optimizer: {cfg.optimizer} (lr {cfg.lr}, weight decay {cfg.weight_decay}"
+          + (f", momentum {cfg.momentum}, nesterov {cfg.nesterov}" if cfg.optimizer == "sgd" else "")
+          + f"), {cfg.lr_schedule} schedule over {cfg.n_steps} steps")
 
     config.run_dir.mkdir(parents=True, exist_ok=True)
     checkpoint = config.run_dir / "best_model.pt"

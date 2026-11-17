@@ -66,6 +66,14 @@ class TrainConfig:
     weight_decay: float = 1e-4
     eval_every: int = 500
     n_val_episodes: int = 300
+    # Optimizer and learning-rate schedule (read by scripts/train_harmonized.py only;
+    # the defaults reproduce the AdamW + cosine runs).
+    optimizer: str = "adamw"  # adamw | sgd
+    momentum: float = 0.9  # sgd only
+    nesterov: bool = True  # sgd only
+    lr_schedule: str = "cosine"  # cosine (down to 0 over n_steps) | step (one drop)
+    lr_milestone: float = 0.7  # step only: fraction of n_steps at which the lr drops
+    lr_gamma: float = 0.1  # step only: lr multiplier at the milestone
 
 
 @dataclass

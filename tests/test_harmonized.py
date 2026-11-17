@@ -117,3 +117,38 @@ def test_resnet12_gives_640_dimensions_at_the_dataset_size():
     with torch.no_grad():
         assert model(torch.randn(2, 3, IMAGE_SIZE[1], IMAGE_SIZE[0])).shape == (2, 640)
     assert model.out_dim == 640
+
+
+# --------------------------------------------------------------------------- optimizers
+
+def test_optimizer_and_schedule_follow_the_config():
+    from types import SimpleNamespace
+
+    from scripts.train_harmonized import build_optimizer, build_scheduler
+
+    cfg = SimpleNamespace(optimizer="sgd", lr=0.1, weight_decay=5e-4, momentum=0.9, nesterov=True,
+                          lr_schedule="step", lr_milestone=0.7, lr_gamma=0.1, n_steps=10)
+    optimizer = build_optimizer([torch.nn.Parameter(torch.zeros(1))], cfg)
+    group = optimizer.param_groups[0]
+    assert isinstance(optimizer, torch.optim.SGD)
+    assert group["momentum"] == 0.9 and group["nesterov"] and group["weight_decay"] == 5e-4
+    scheduler = build_scheduler(optimizer, cfg)
+    lrs = []
+    for _ in range(10):
+        lrs.append(optimizer.param_groups[0]["lr"])
+        optimizer.step()
+        scheduler.step()
+    assert lrs[:7] == [0.1] * 7 and all(abs(lr - 0.01) < 1e-12 for lr in lrs[7:])  # x0.1 at 70%
+
+    cfg.optimizer, cfg.lr_schedule = "adamw", "cosine"
+    assert isinstance(build_optimizer([torch.nn.Parameter(torch.zeros(1))], cfg), torch.optim.AdamW)
+
+
+def test_set_overrides_are_nested_and_typed():
+    from scripts.train_harmonized import parse_sets
+
+    assert parse_sets(["train.lr=0.01", "train.nesterov=true", "run_name=a/b"]) == {
+        "train": {"lr": 0.01, "nesterov": True}, "run_name": "a/b",
+    }
+    with pytest.raises(ValueError):
+        parse_sets(["train.lr"])

@@ -143,3 +143,41 @@ Questions à trancher avec les résultats :
 2. Quel écart entre le ResNet-12 et le Conv-4 ?
 3. Les modèles entraînés battent-ils nettement le point de comparaison sur les pixels ?
 4. Le CL2N change-t-il les scores, et dans le même sens pour tous les runs ?
+
+## 6. Ré-entraîner PRWN ResNet-12 avec SGD
+
+Objectif : comparer SGD à AdamW pour PRWN + ResNet-12, tout le reste étant identique
+(données, épisodes, 20 000 pas, validation, test commun). Run AdamW de référence :
+`results/harmonized_prwn_resnet12` (81,22 % en 1-shot, 89,58 % en 5-shot).
+
+Momentum 0,9, Nesterov et weight decay 5e-4 sont ceux du run NCA. Le taux d'apprentissage
+de NCA (0,1) vise des lots de 128 images, alors que nos épisodes en ont 10 : il est choisi
+par un balayage court, **jugé uniquement sur `valid`** (le test n'est jamais lancé).
+
+### 6.1 Balayage (6 candidats x 4 000 pas, environ 30 min)
+
+```bash
+nohup python scripts/sweep_optimizer.py --device cuda > sweep_optimizer.log 2>&1 &
+
+tail -f sweep_optimizer.log
+```
+
+Candidats : AdamW 1e-3 (référence), SGD 0,1 avec palier x0,1 à 70 % (réglages exacts de
+NCA), et SGD en cosinus à 0,1, 0,03, 0,01 et 0,003. Le classement s'affiche à la fin et
+est écrit dans `results/sweep_optimizer/summary.csv`.
+
+Choisir le meilleur candidat SGD sur `best val`. Si plusieurs sont à moins d'un
+intervalle de confiance du meilleur, prendre le planning cosinus. Un candidat `failed`
+a divergé (loss non finie) : l'écarter.
+
+### 6.2 Run complet avec le meilleur réglage SGD
+
+Reporter le taux (et le planning s'il gagne en `step`) dans
+`configs/harmonized/prwn_resnet12_sgd.yaml`, puis :
+
+```bash
+CUDA_VISIBLE_DEVICES=0 nohup python scripts/train_harmonized.py --config configs/harmonized/prwn_resnet12_sgd.yaml --device cuda > prwn_resnet12_sgd.log 2>&1 &
+```
+
+Résultats dans `results/harmonized_prwn_resnet12_sgd/`. Rapporter les 4 scores de test à
+côté de ceux du run AdamW, avec le classement du balayage.
