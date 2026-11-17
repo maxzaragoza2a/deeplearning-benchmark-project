@@ -35,6 +35,10 @@ CANDIDATES = {
     "sgd_lr0.03": {"optimizer": "sgd", "lr": 0.03, "weight_decay": 5e-4, "lr_schedule": "cosine"},
     "sgd_lr0.01": {"optimizer": "sgd", "lr": 0.01, "weight_decay": 5e-4, "lr_schedule": "cosine"},
     "sgd_lr0.003": {"optimizer": "sgd", "lr": 0.003, "weight_decay": 5e-4, "lr_schedule": "cosine"},
+    # Added after the first sweep: 0.003 was the best and the lowest tested lr, so the
+    # optimum may lie below it.
+    "sgd_lr0.001": {"optimizer": "sgd", "lr": 0.001, "weight_decay": 5e-4, "lr_schedule": "cosine"},
+    "sgd_lr0.0003": {"optimizer": "sgd", "lr": 0.0003, "weight_decay": 5e-4, "lr_schedule": "cosine"},
 }
 
 
@@ -50,13 +54,23 @@ def run_candidate(name: str, overrides: dict, steps: int, device: str, results_d
 
     run_dir = results_dir / SWEEP_DIR / name
     run_dir.mkdir(parents=True, exist_ok=True)
+    (run_dir / "metrics.json").unlink(missing_ok=True)  # never report a previous run as this one
     start = time.time()
     with open(run_dir / "train.log", "w", encoding="utf-8") as log:
         returncode = subprocess.call(command, cwd=ROOT, stdout=log, stderr=subprocess.STDOUT)
-    row = {"candidate": name, **overrides, "minutes": round((time.time() - start) / 60, 1)}
+    minutes = round((time.time() - start) / 60, 1)
+    if returncode != 0:
+        tail = (run_dir / "train.log").read_text(encoding="utf-8", errors="replace").strip().splitlines()[-1:]
+        return {"candidate": name, **overrides, "minutes": minutes,
+                "status": f"failed: {tail[0] if tail else returncode}"}
+    return read_candidate(name, overrides, run_dir, minutes)
 
+
+def read_candidate(name: str, overrides: dict, run_dir: Path, minutes: float | str = "") -> dict:
+    """Validation summary of a finished candidate, read from its metrics.json and history.csv."""
+    row = {"candidate": name, **overrides, "minutes": minutes}
     metrics_file = run_dir / "metrics.json"
-    if returncode != 0 or not metrics_file.exists():
+    if not metrics_file.exists():
         tail = (run_dir / "train.log").read_text(encoding="utf-8", errors="replace").strip().splitlines()[-1:]
         return {**row, "status": f"failed: {tail[0] if tail else returncode}"}
 
@@ -97,6 +111,14 @@ def main():
         result = f"best val {row['best_val']} % at step {row['best_step']}" if row["status"] == "ok" else row["status"]
         print(f"{result} ({row['minutes']} min)", flush=True)
 
+    # Candidates finished in an earlier sweep (e.g. before --only) join the ranking.
+    for name, overrides in CANDIDATES.items():
+        run_dir = args.results_dir / SWEEP_DIR / name
+        if name not in names and (run_dir / "metrics.json").exists():
+            row = read_candidate(name, overrides, run_dir)
+            if row.get("best_step") is not None and run_dir.joinpath("history.csv").exists():
+                rows.append({**row, "candidate": f"{name} (earlier)"})
+
     ranked = sorted(rows, key=lambda r: r.get("best_val", -1), reverse=True)
     out = args.results_dir / SWEEP_DIR / "summary.csv"
     fields = ["candidate", "optimizer", "lr", "lr_schedule", "weight_decay", "status", "best_val",
@@ -107,13 +129,13 @@ def main():
         writer.writerows(ranked)
 
     print(f"\nRanking on valid (5-way 1-shot, {args.steps} steps):")
-    print(f"  {'candidate':<16} {'best val':>9} {'+/-':>5} {'step':>6} {'last val':>9} {'train acc':>10}")
+    print(f"  {'candidate':<24} {'best val':>9} {'+/-':>5} {'step':>6} {'last val':>9} {'train acc':>10}")
     for row in ranked:
         if row["status"] == "ok":
-            print(f"  {row['candidate']:<16} {row['best_val']:>8.2f}% {row['best_val_ci95']:>5.2f} "
+            print(f"  {row['candidate']:<24} {row['best_val']:>8.2f}% {row['best_val_ci95']:>5.2f} "
                   f"{row['best_step']:>6} {row['last_val']:>8.2f}% {row['last_train_acc']:>9.1f}%")
         else:
-            print(f"  {row['candidate']:<16} {row['status']}")
+            print(f"  {row['candidate']:<24} {row['status']}")
     print(f"\nWritten to {out}")
     print("Candidates within about one CI of the best are tied: prefer the simplest (cosine) among them.")
 
