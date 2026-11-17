@@ -9,7 +9,9 @@ base: prwn_resnet12.yaml
 run_name: harmonized_prwn_resnet12_sgd
 train:
   optimizer: sgd
-  lr: 0.01                       # TO CONFIRM with the sweep (best valid accuracy)
+  lr: 0.003                      # chosen by the sweep on valid (4,000 steps): 0.0003-0.003 tie at ~84 %,
+                                 # 0.003 is the best and the only one still improving at the end;
+                                 # 0.01 and above are worse (0.1 = NCA setting: 79.4 % cosine, 77.9 % step)
   momentum: 0.9
   nesterov: true
   weight_decay: 5.0e-4
